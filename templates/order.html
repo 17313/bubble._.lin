@@ -1,0 +1,52 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href='{{url_for("static", filename="order_style.css")}}'>
+    <title>Order</title>
+</head>
+<body>
+
+<table>
+        <div class = "inputs"></div>
+            <form action="/add" method="post">
+            <tr>
+                <input type="text" name="username">
+                <input type="text" name="drink_name">
+                <input type="string" name="drink_temperature">
+                <input type="string" name="drink_additives">
+                <input type="submit" value="Add">
+            </tr>
+        </form>
+        </div>
+    <div>
+            <tr>
+                <div><th>Username:</th></div>
+                <div><th>Drink name:</th></div>
+                <div><th>Drink temperature:</th></div>
+                <div><th>Drink additives:</th></div>
+                <div><th>Delete?</th></div>
+            </tr>
+            {% for order in results %}
+            <tr>
+                <td>{{order[1]}} </td>
+                <td>{{order[2]}}</td>
+                <td>{{order[3]}}</td>
+                <td>{{order[4]}}</td>
+                <td>
+                    <form action="/delete" method="post">
+                    <input type="hidden" name="username" value="{{order[0]}}">
+                    <input type="submit" value="delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+    </div>
+</table>
+</body>
+</html>

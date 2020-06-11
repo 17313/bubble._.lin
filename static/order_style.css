@@ -1,0 +1,34 @@
+body{
+    background-color: #fffdd0
+}
+
+head {
+    color: white;
+    font-size: 30px;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    
+
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 10px;
+}
+div{
+    margin-top: 20px;
+}
+
+input{
+    width: 350px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+form {
+    width: 200px;
+}
