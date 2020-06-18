@@ -9,7 +9,7 @@ head {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 80%;
+    width: 50%;
     
 
 }
@@ -24,8 +24,6 @@ div{
 }
 
 input{
-    width: 350px;
-    height: 20px;
     border: 1px solid black;
 }
 

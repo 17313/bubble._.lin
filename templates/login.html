@@ -1,0 +1,27 @@
+
+<html>
+    <head>
+      <title>Flask Intro - login page</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet"  href='{{url_for("static", filename="login_style.css")}}'>
+    </head>
+    <body>  
+      <div class="container">
+      <table>
+        <tr><h1>Please login</h1></tr>
+        <br>
+        <form action="" method="post">
+          <td><input type="text" placeholder="Username" name="username" value="{{
+            request.form.username }}"></td>
+          <td><input type="password" placeholder="Password" name="password" value="{{
+            request.form.password }}"></td>
+          <td><input class="btn btn-default" type="submit" value="Login"></td>
+        </form>
+      </table>
+      </div>
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {% endif %}
+
+    </body>
+  </html>
