@@ -62,13 +62,9 @@ li:hover::after {
   width: 100%;
 }
 
-li a:active {
-  color: white;
-}
-
 li a:hover {
   text-decoration: none;
-  color: white;
+  color: inherit;
 }
 .icon{
   top: 8%;
@@ -79,6 +75,7 @@ li a:hover {
 .border{
   border: 100px black solid;
 }
+
 
 a{
   color: white !important;

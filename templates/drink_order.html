@@ -7,46 +7,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href='{{url_for("static", filename="order_style.css")}}'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <title>Drink Order</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+        <div class="navbar-header">
+        <a class="navbar-brand" id='bubble'>BubbleLin</a>
+        </div>
+        <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/menu">Menu</a></li>
+        <li><a href="/drink_order">Order</a></li>
+        <div class="icon"><a href="/login"><img src="static/user-icon.png" alt="log in" height=64 width=64></a></div>
+        </ul>
+    </div>
+    </div>
+    </nav>
+        
+
+
+<!--<table>
+    <div class = "inputs"></div>
+        <form action="/add" method="post">
+        <tr>
+            <input type="text" name="username">
+            <input type="text" name="drink_name">
+            <input type="string" name="drink_temperature">
+            <input type="string" name="drink_additives">-->
+
+
+
 
 <table>
-        <div class = "inputs"></div>
-            <form action="/add" method="post">
-            <tr>
-                <input type="text" name="username">
-                <input type="text" name="drink_name">
-                <input type="string" name="drink_temperature">
-                <input type="string" name="drink_additives">
-                <input type="submit" value="Add">
-            </tr>
-        </form>
-        </div>
-    <div>
-            <tr>
-                <div><th>Username:</th></div>
-                <div><th>Drink name:</th></div>
-                <div><th>Drink temperature:</th></div>
-                <div><th>Drink additives:</th></div>
-                <!--<div><th>Delete?</th></div>-->
-            </tr>
-            {% for drink_order in results %}
-            <tr>
-                <td>{{drink_order[1]}} </td>
-                <td>{{drink_order[2]}}</td>
-                <td>{{drink_order[3]}}</td>
-                <td>{{drink_order[4]}}</td>
-                <!--<td>
-                    <form action="/delete" method="post"> <input type="password" placeholder="Password" name="password" value="{{request.form.password }}">
-                    <input type="hidden" name="username" value="{{drink_order[0]}}">
-                    <input type="submit" value="delete">
-                    </form>
-                </td>-->
-            </tr>
-            {% endfor %}
+<tr>
+<td><label for="username">Username:</label>
+<select name="customer_name" id="username"></select>
+{% for customer in login %}
+<option value="{{ customer[0] }}">{{ customer[0] }}</option>
+{% endfor %}
+</td>
 
-    </div>
+<td><div class = "inputs"></div>
+<label for="flavour">Drink name:</label>
+<select name="drink_name" id="flavour">
+    {% for item in flavour %}
+        <option value="{{ item[0] }}">{{ item[1] }}</option>
+    {% endfor %}
+</select>
+<br><br>
+</td>      
+
+<td><div class = "inputs"></div>
+<label for="temperature">Temperature:</label>
+<select name="drink_temperature" id="temperature">
+    {% for item in temperature %}
+        <option value="{{ item[0] }}">{{ item[1] }}</option>
+    {% endfor %}
+</select>
+<br><br>
+</td>
+
+<td><div class = "inputs"></div>
+<label for="additives">Additives:</label>
+<select name="drink_additives" id="additives">
+    {% for item in additives %}
+        <option value="{{ item[0] }}">{{ item[1] }}</option>
+    {% endfor %}
+</select>
+<br><br>
+</td>
+<input type="submit" value="add">
+</form>
+<td>Delete?</td>
+</tr>
+        {% for drink_order in goods %}
+        <tr>
+            <td>{{drink_order[0]}} </td>
+            <td>{{drink_order[1]}}</td>
+            <td>{{drink_order[2]}}</td>
+            <td>{{drink_order[3]}}</td>
+            <td>
+                <form action="/delete" method="post">
+                <input type="hidden" name="customer_name" value="{{drink_order[1]}}">
+                <input type="submit" value="delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+
+
 </table>
 </body>
 </html>

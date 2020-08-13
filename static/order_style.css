@@ -1,5 +1,5 @@
 body{
-    background-color: #fffdd0
+    background-color: #fffdd0;
 }
 
 head {
@@ -10,23 +10,82 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 50%;
-    
+}
 
+tr{
+  margin: 10px;
 }
 
 td, th {
     border: 1px solid black;
-    text-align: left;
-    padding: 10px;
+    text-align: center;
 }
-div{
-    margin-top: 20px;
-}
+label{
+    margin-top: 30px;
 
-input{
-    border: 1px solid black;
 }
 
 form {
     width: 200px;
+}
+
+#bubble{
+
+    font-size: 50px;
+  }
+
+  
+  nav{
+    height: 80px;
+  }
+  
+  li{
+    font-size: 40px;
+    color: aliceblue;
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+    position: relative;
+  }
+  
+  li::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 0px;
+    height: 3px;
+    background: white;
+    transition: width 300ms ease;
+  }
+  
+  li:hover::after {
+    width: 100%;
+  }
+  
+  li a:active {
+    color: white;
+}
+
+  li a:hover {
+    text-decoration: none;
+    color: white;
+  }
+
+  .icon{
+    top: 8%;
+    border: 2px white solid;
+  
+  }
+
+.submit{
+  position: relative;;
+}
+
+a{
+  color: white !important;
 }
