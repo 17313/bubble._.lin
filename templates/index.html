@@ -31,45 +31,15 @@
     </div>
     </nav>
 
-<table>
-<tr>
-  <td><div class="container w3-center">
-    <img src="static/original.jpg" alt="" height=250 width=300>      
-    <p><b>Original milk tea</p></h>  
-    </div></td>
-
-    <td><div class="container w3-center"> 
-        <img src="static/taro.jpg" alt="" height=250 width=300> 
-        <p><b>Taro milk Tea</b></p> 
-    </div></td>
-
-    <td><div class="container w3-center">
-        <img src="static/honeydew.jpg" alt="" height=250 width=300>      
-        <p><b>Honeydew milk tea</p></h>  
-    </div></td>
-
-    <td><div class="container w3-center">
-        <img src="static/caramel.jpg" alt="" height=250 width=300>      
-        <p><b>Caramel milk tea</p></h>  
-    </div></td>
-
-    <td><div class="container w3-center">
-        <img src="static/wintermelon.jpg" alt="" height=250 width=300>      
-        <p><b>Wintermelon milk tea</p></h>  
-    </div></td>
-
-    <td><div class="container w3-center">
-        <img src="static/red bean.jpg" alt="" height=250 width=300>      
-        <p><b>Red Bean milk tea</p></h>  
-    </div></td>
-
-    <td><div class="container w3-center"  >
-        <img src="static/chocolate.jpg" alt="" height=250 width=300>      
-        <p><b>Chocolate milk tea</p></h>  
-    </div></td>
-
-
-</tr>
-</table>
+    <table>
+            {% for item in results %}
+            <tr>
+                <td><div class="container w3-center"  style="float: left;" title = "{{item[1]}}">    
+                <img src="static/{{item[0]}}" alt="{{item[0]}}" height=250 width=300>
+                <p><b>{{item[2]}} milk tea</p></h>  
+                </div></td>
+            </tr>
+            {% endfor %}
+            </table>
 </body>
 </html>

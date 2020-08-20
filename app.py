@@ -9,8 +9,8 @@ global admin
 admin = False
 global user_id
 user_id = None
-global username
-username = 
+
+
 
 
 app.secret_key = 'bubbles'
@@ -44,7 +44,12 @@ def get_user():
 @app.route('/')
 def index():
     '''make an app route and link to index html template'''
-    return render_template('index.html')
+    cursor =  get_db().cursor()
+    sql = "SELECT images, description, name FROM image"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+
+    return render_template('index.html', results=results)
 
 
 
@@ -108,7 +113,12 @@ def logout():
 # users can view products and read about what they are
 @app.route('/menu')
 def menu():
-    return render_template("menu.html")
+    cursor =  get_db().cursor()
+    sql = "SELECT images, description, name FROM image"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+
+    return render_template("menu.html", results=results)
 
 # ordering system using database and foreign keys
 @app.route("/drink_order", methods=["GET", "POST"])
@@ -130,24 +140,19 @@ def order():
     cursor.execute(drinks)
     flavour = cursor.fetchall()
 
-    customer_id = "SELECT id, username FROM login;"
-    cursor = get_db().cursor()
-    cursor.execute(customer_id)
-    name = cursor.fetchall()
-
-    items = "SELECT username, name, temperature, additives FROM drink_order;"
+    items = "SELECT login.username, name, temperature, additives FROM drink_order JOIN login ON drink_order.username == login.id"
     cursor = get_db().cursor()
     cursor.execute(items)
     goods = cursor.fetchall()
 
-    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, name=name, admin = admin, user_id=user_id)
+    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, admin = admin, user_id=user_id)
 
 # add order to drink order
 @app.route("/add", methods={"GET", "POST"})
 def add():
     if request.method == "POST":
         cursor = get_db().cursor()
-        user_id = username
+        user_id = Username
         drink_name = request.form['drink_name']
         drink_temperature = request.form["drink_temperature"]
         drink_additives = request.form["drink_additives"]

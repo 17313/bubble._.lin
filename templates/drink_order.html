@@ -31,25 +31,16 @@
         
 
 
-<!--<table>
-    <div class = "inputs"></div>
-        <form action="/add" method="post">
-        <tr>
-            <input type="text" name="username">
-            <input type="text" name="drink_name">
-            <input type="string" name="drink_temperature">
-            <input type="string" name="drink_additives">-->
-
-
 
 
 <table>
 <tr>
 <td><label for="username">Username:</label>
-<select name="username" id="username"></select>
-{% for item in login %}
-<option value="{{ item[1] }}">{{ item[1] }}</option>
-{% endfor %}
+<select name="customer_id" id="username">
+    {% for item in username %}
+        <option value="{{ item[1] }}">{{ item[1] }}</option>
+    {% endfor %}
+</select>
 <br><br>
 </td>
 
