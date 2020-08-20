@@ -44,16 +44,11 @@
 </div>
 
 <button><a href="/signup">Register</a></button>
+{%if session["logged_in"]%}
 <button><a href="/logout">Logout</a></button>
+{%endif%}
 
 </table>
-
-
-
-
-{% if error %}
-<p class="error"><strong>Error:</strong> {{ error }}</p>
-{% endif %}
 
     </body>
   </html>
