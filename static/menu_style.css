@@ -16,7 +16,6 @@ body{
   td.img {
     display: block;
     padding-top: 50px;
-  
   }
   
   nav{
@@ -27,7 +26,7 @@ body{
     font-size: 40px;
     color: aliceblue;
     padding: 8px 16px;
-    float: left;
+    float: right;
     width: auto;
     border: none;
     display: block;
@@ -81,5 +80,20 @@ body{
     opacity: 0.5;
   }
 
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+  }
+  
+
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 33.33%;
+    padding: 5px;
+  }
 /* ---------------------------------------------------------------------------------------- */
 

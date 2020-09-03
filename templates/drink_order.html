@@ -29,10 +29,6 @@
     </div>
     </nav>
         
-
-
-
-
 <table>
 <tr>
 <td><label for="username">Username:</label>
@@ -78,21 +74,22 @@
 </form>
 <td>Delete?</td>
 </tr>
+<br></br>
 {% for drink_order in goods %}
     <tr>
-        <td>{{drink_order[0]}} </td>
+        <td>{{drink_order[0]}}</td>
         <td>{{drink_order[1]}}</td>
         <td>{{drink_order[2]}}</td>
         <td>{{drink_order[3]}}</td>
         <td>
-    {% if user_id == drink_order[5] %}
+    {% if user_id == drink_order[0] %}
         <div id="delete"></div>
-        <form action="/delete" method="POST">
-        <input type="hidden" name="customer_name" value="{{drink_order[0]}}">
-        <input type="submit" value="delete">
-        </form>
-        </tr>
+            <form action="/delete" method="POST">
+                <input type="hidden" name="customer_name" value="{{drink_order[0]}}">
+                <input type="submit" value="delete">
+            </form>
         </div>
+    </tr>
     {%endif%}
 {% endfor %}
 

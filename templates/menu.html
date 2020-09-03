@@ -33,9 +33,16 @@
 <table>
 {% for item in results %}
 <tr>
-    <td><div class="container w3-center"  style="float: left;" title = "{{item[1]}}">    
-    <img src="static/{{item[0]}}" alt="{{item[0]}}" height=250 width=300>
-    <p><b>{{item[2]}} milk tea</p></h>  
+    {% for explanation in description %}
+    <td><div class="container w3-center"  title = "Description:
+{{explanation[1]}}">   
+    {% endfor %}
+        <div class="row">
+            <div class="column">
+                <img src="static/{{item[0]}}" alt="{{item[0]}}" height=250 width=300>
+                <p><b>{{item[3]}} milk tea</p></h> 
+            </div>
+        </div>
     </div></td>
 </tr>
 {% endfor %}

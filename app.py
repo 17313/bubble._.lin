@@ -45,7 +45,7 @@ def get_user():
 def index():
     '''make an app route and link to index html template'''
     cursor =  get_db().cursor()
-    sql = "SELECT images, description, name FROM image"
+    sql = "SELECT images, name FROM image"
     cursor.execute(sql)
     results = cursor.fetchall()
 
@@ -94,6 +94,7 @@ def login():
         if check_password_hash(results[0][1], password):
             session["logged_in"] = True
             user_id = results[0][0]
+            print(user_id)
             return redirect('/')
     if username == '' and password == '':
         return redirect('/')
@@ -114,11 +115,15 @@ def logout():
 @app.route('/menu')
 def menu():
     cursor =  get_db().cursor()
-    sql = "SELECT images, description, name FROM image"
+    sql = "SELECT images FROM image"
     cursor.execute(sql)
     results = cursor.fetchall()
 
-    return render_template("menu.html", results=results)
+    cursor =  get_db().cursor()
+    sql = "SELECT name, description FROM flavour"
+    cursor.execute(sql)
+    description = cursor.fetchall()
+    return render_template("menu.html", results=results, description=description)
 
 # ordering system using database and foreign keys
 @app.route("/drink_order", methods=["GET", "POST"])
@@ -138,21 +143,20 @@ def order():
     drinks = "SELECT id, name FROM flavour;"
     cursor = get_db().cursor()
     cursor.execute(drinks)
-    flavour = cursor.fetchall()
+    flavour = cursor.fetchall() 
 
-    items = "SELECT login.username, name, temperature, additives FROM drink_order JOIN login ON drink_order.username == login.id"
+    items = "SELECT username, name, temperature, additives FROM drink_order"
     cursor = get_db().cursor()
     cursor.execute(items)
     goods = cursor.fetchall()
 
-    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, admin = admin, user_id=user_id)
+    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, admin = admin,)
 
 # add order to drink order
 @app.route("/add", methods={"GET", "POST"})
 def add():
     if request.method == "POST":
         cursor = get_db().cursor()
-        user_id = Username
         drink_name = request.form['drink_name']
         drink_temperature = request.form["drink_temperature"]
         drink_additives = request.form["drink_additives"]
@@ -164,11 +168,10 @@ def add():
 # users logged in can delete their orders 
 @app.route('/delete' , methods=["GET", "POST"])
 def delete():
-    if 'logged_in' not in session:
-        return redirect("/drink_order")
+
     if request.method == 'POST':
         cursor = get_db().cursor()
-        customer_username = int(request.form["customer_name"])
+        customer_username = str(request.form["customer_name"])
         sql = "DELETE FROM drink_order WHERE id=?"
         cursor.execute(sql,(customer_username,))
         get_db().commit()
