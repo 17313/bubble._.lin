@@ -1,5 +1,5 @@
 body{
-    background-color:#f8caca
+    background-color:#f8caca;
 
 }
 
@@ -13,11 +13,27 @@ body{
   padding-top: 25px;
   font-size: 50px;
 }
+
+table{
+  table-layout: fixed;
+}
   td.img {
     display: block;
     padding-top: 50px;
   }
   
+.border{
+  margin: 20px;
+  border: black solid 5px;
+}
+
+tr{
+  width: 960px;
+}
+
+td{
+    border: black solid 10px;
+  }
   nav{
     height: 80px;
   }
@@ -72,28 +88,14 @@ body{
   title{
     position: relative;
     float: left;
-
   }
 
 
-  img:hover {
-    opacity: 0.5;
-  }
 
-  .column {
-    float: left;
-    width: 33.33%;
-    padding: 5px;
-  }
-  
 
-  .row {
-    display: flex;
-  }
-  
-  .column {
-    flex: 33.33%;
-    padding: 5px;
-  }
+
+
+
+
 /* ---------------------------------------------------------------------------------------- */
 

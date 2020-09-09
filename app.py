@@ -41,6 +41,9 @@ def get_user():
         pass
     return False
 
+def sum():
+    total = "SELECT SUM(price)"
+
 @app.route('/')
 def index():
     '''make an app route and link to index html template'''
@@ -120,17 +123,18 @@ def menu():
     results = cursor.fetchall()
 
     cursor =  get_db().cursor()
-    sql = "SELECT name, description FROM flavour"
+    sql = "SELECT name, price, description FROM flavour"
     cursor.execute(sql)
     description = cursor.fetchall()
-    return render_template("menu.html", results=results, description=description)
+    print(results)
+    return render_template("menu.html", results=results, length=range(len(results)), description=description)
 
 # ordering system using database and foreign keys
 @app.route("/drink_order", methods=["GET", "POST"])
 def order():
     if 'logged_in' not in session:
         return redirect("/login")
-    extras = "SELECT id, name FROM additives"
+    extras = "SELECT id, name, price FROM additives"
     cursor = get_db().cursor()
     cursor.execute(extras)
     additives = cursor.fetchall()
@@ -140,17 +144,31 @@ def order():
     cursor.execute(degrees)
     temperature = cursor.fetchall()
 
-    drinks = "SELECT id, name FROM flavour;"
+    drinks = "SELECT id, name, price FROM flavour;"
     cursor = get_db().cursor()
     cursor.execute(drinks)
     flavour = cursor.fetchall() 
 
-    items = "SELECT username, name, temperature, additives FROM drink_order"
+    items = "SELECT username, name, temperature, additives, price FROM drink_order"
     cursor = get_db().cursor()
     cursor.execute(items)
     goods = cursor.fetchall()
 
-    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, admin = admin,)
+#-------------------------------------------------------------------------------#
+
+    flavour_price = "SELECT price FROM flavour"
+    cursor = get_db().cursor()
+    cursor.execute(flavour_price)
+    drink_price = cursor.fetchone() 
+
+    extras_price = "SELECT price FROM additives"
+    cursor = get_db().cursor()
+    cursor.execute(extras_price)
+    additives_price = cursor.fetchone() 
+
+
+
+    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, additive_price=additive_price,drink_price=drink_price)
 
 # add order to drink order
 @app.route("/add", methods={"GET", "POST"})
@@ -160,8 +178,9 @@ def add():
         drink_name = request.form['drink_name']
         drink_temperature = request.form["drink_temperature"]
         drink_additives = request.form["drink_additives"]
-        sql = "INSERT INTO drink_order(username, name, temperature, additives) VALUES (?,?,?,?)"
-        cursor.execute(sql,(user_id, drink_name, drink_temperature, drink_additives))
+        price = request.form['additive_price'] + request.form['drink_price']
+        sql = "INSERT INTO drink_order(username, name, temperature, additives, price) VALUES (?,?,?,?,?)"
+        cursor.execute(sql,(user_id, drink_name, drink_temperature, drink_additives, price,))
         get_db().commit()
     return redirect("/drink_order")
 
@@ -176,6 +195,7 @@ def delete():
         cursor.execute(sql,(customer_username,))
         get_db().commit()
     return redirect('/drink_order')
+
 
 
 # inform if site has a problem
