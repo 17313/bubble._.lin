@@ -7,8 +7,7 @@ app = Flask(__name__)
 DATABASE = 'Bubble._.Lin.db'
 global admin
 admin = False
-global user_id
-user_id = None
+
 
 
 
@@ -41,21 +40,15 @@ def get_user():
         pass
     return False
 
-def sum():
-    total = "SELECT SUM(price)"
-
 @app.route('/')
 def index():
     '''make an app route and link to index html template'''
     cursor =  get_db().cursor()
-    sql = "SELECT images, name FROM image"
+    sql = "SELECT name, images FROM flavour"
     cursor.execute(sql)
     results = cursor.fetchall()
 
     return render_template('index.html', results=results)
-
-
-
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -78,9 +71,9 @@ def signup():
     '''insert new username and password into database'''
     cursor.execute(sql_query, (new_username, generate_password_hash(new_password, )))
     get_db().commit()
+
     return redirect("/")
     
-
 # find and use code from database to access user functions on site
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -97,7 +90,7 @@ def login():
         if check_password_hash(results[0][1], password):
             session["logged_in"] = True
             user_id = results[0][0]
-            print(user_id)
+            session["user_id"] = user_id
             return redirect('/')
     if username == '' and password == '':
         return redirect('/')
@@ -117,17 +110,11 @@ def logout():
 # users can view products and read about what they are
 @app.route('/menu')
 def menu():
+    drink = "SELECT name, price, description, images FROM flavour"
     cursor =  get_db().cursor()
-    sql = "SELECT images FROM image"
-    cursor.execute(sql)
-    results = cursor.fetchall()
-
-    cursor =  get_db().cursor()
-    sql = "SELECT name, price, description FROM flavour"
-    cursor.execute(sql)
-    description = cursor.fetchall()
-    print(results)
-    return render_template("menu.html", results=results, length=range(len(results)), description=description)
+    cursor.execute(drink)
+    flavour = cursor.fetchall()
+    return render_template("menu.html", flavour=flavour)
 
 # ordering system using database and foreign keys
 @app.route("/drink_order", methods=["GET", "POST"])
@@ -149,50 +136,54 @@ def order():
     cursor.execute(drinks)
     flavour = cursor.fetchall() 
 
-    items = "SELECT username, name, temperature, additives, price FROM drink_order"
+    items = "SELECT id, username, name, temperature, additives, price FROM drink_order"
     cursor = get_db().cursor()
     cursor.execute(items)
     goods = cursor.fetchall()
 
-#-------------------------------------------------------------------------------#
+    sql = "SELECT username FROM login WHERE id= ?"
+    cursor.execute(sql,(session["user_id"],))
+    customer_name = cursor.fetchone()[0]
+    
 
-    flavour_price = "SELECT price FROM flavour"
-    cursor = get_db().cursor()
-    cursor.execute(flavour_price)
-    drink_price = cursor.fetchone() 
-
-    extras_price = "SELECT price FROM additives"
-    cursor = get_db().cursor()
-    cursor.execute(extras_price)
-    additives_price = cursor.fetchone() 
+#-------------------------------------------------------------------------------
 
 
 
-    return render_template('drink_order.html', temperature=temperature, additives=additives,  flavour=flavour, goods=goods, additive_price=additive_price,drink_price=drink_price)
+
+    return render_template('drink_order.html', temperature=temperature, goods=goods, flavour=flavour, additives=additives, customer_name=customer_name)
 
 # add order to drink order
 @app.route("/add", methods={"GET", "POST"})
 def add():
     if request.method == "POST":
         cursor = get_db().cursor()
+        sql = "SELECT username FROM login WHERE id= ?"
+        cursor.execute(sql,(session["user_id"],))
+        customer_name = cursor.fetchone()[0]
         drink_name = request.form['drink_name']
+        sql = 'SELECT price FROM flavour WHERE name = ?'
+        cursor.execute(sql,(drink_name,))
+        drink_price = cursor.fetchone()[0]
         drink_temperature = request.form["drink_temperature"]
         drink_additives = request.form["drink_additives"]
-        price = request.form['additive_price'] + request.form['drink_price']
+        sql = 'SELECT price FROM additives WHERE name = ?'
+        cursor.execute(sql,(drink_additives,))
+        additive_price = cursor.fetchone()[0]
+        price = drink_price + additive_price
         sql = "INSERT INTO drink_order(username, name, temperature, additives, price) VALUES (?,?,?,?,?)"
-        cursor.execute(sql,(user_id, drink_name, drink_temperature, drink_additives, price,))
+        cursor.execute(sql,(customer_name, drink_name, drink_temperature, drink_additives, price))
         get_db().commit()
     return redirect("/drink_order")
 
 # users logged in can delete their orders 
 @app.route('/delete' , methods=["GET", "POST"])
 def delete():
-
     if request.method == 'POST':
         cursor = get_db().cursor()
-        customer_username = str(request.form["customer_name"])
+        order_id = request.form["order_id"]
         sql = "DELETE FROM drink_order WHERE id=?"
-        cursor.execute(sql,(customer_username,))
+        cursor.execute(sql,(order_id,))
         get_db().commit()
     return redirect('/drink_order')
 
