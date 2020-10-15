@@ -1,20 +1,7 @@
 body{
   background-color: bisque;
 }
-/*table {
-  align-self: center;
-  border:1px;
-  margin-left:auto;
-  margin-right:auto;
-}
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 540px;
-  position: fixed;
-  transform: translate(-50%, -50%);
-}*/
+
 #bubble{
   padding-top: 25px;
   font-size: 50px;
@@ -68,34 +55,16 @@ a{
 }
 
 
-/*.menu {
-  position: fixed;
-  top: 50%;
-  left: 28%;
-  transform: translate(-25%, -25%);
-  font-size: 150px;
-  z-index: 1;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  ;
-}
-
-.order{
-  position: fixed;
-  top: 50%;
-  left: 62%;
-  transform: translate(-25%, -25%);
-  font-size: 150px;
-  z-index: 1;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-}*/
-
 .icon{
   top: 8%;
   border: 2px white solid;
 
 }
 
+
+.w3-card-4 img{
+  width: 350px;
+  height: 400px;
+}
 /* ---------------------------------------------------------------------------------------- */
 
