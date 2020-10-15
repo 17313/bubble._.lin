@@ -31,22 +31,16 @@
         
 <table>
 <tr>
-    
-<form action="/add" method="POST">
-<td><label for="username">Username:</label>
-<select name="customer_id" id="username">
-    {% for item in username %}
-        <option value="{{ item[1] }}">{{ item[1] }}</option>
-    {% endfor %}
-</select>
-<br><br>
+<td>  
+<p>Username:</p>
 </td>
-
+<form action="/add" method="POST">
 <td><div class = "inputs"></div>
 <label for="flavour">Drink name:</label>
 <select name="drink_name" id="flavour">
     {% for item in flavour %}
         <option value="{{ item[1] }}">{{ item[1] }} - ${{ item[2] }}</option>
+        
     {% endfor %}
 </select>
 <br><br>
@@ -58,6 +52,7 @@
 <select name="drink_additives" id="additives">
     {% for item in additives %}
         <option value="{{ item[1] }}">{{ item[1] }} - ${{ item[2] }}</option>
+
     {% endfor %}    
 </select>
     
@@ -78,7 +73,7 @@
 
 <td>Total:</td>
 
-<td><input type="submit" value="add"></td>
+<td><input type="submit" value="order"></td>
 
 </form>
 <td>Delete?</td>
@@ -86,21 +81,21 @@
 <br></br>
 {% for drink_order in goods %}
     <tr>
-        <td>{{drink_order[0]}}</td>
-        <td>{{drink_order[1]}} milk tea</td>
-        <td>{{drink_order[3]}}</td>
-        <td>{{drink_order[2]}}</td>
+        <td>{{drink_order[1]}}</td>
+        <td>{{drink_order[2]}} milk tea</td>
         <td>{{drink_order[4]}}</td>
+        <td>{{drink_order[3]}}</td>
+        <td>${{"{:.2f}".format(drink_order[5])}}</td>
         <td>
-    {% if user_id == drink_order[0] %}
+    {% if customer_name == drink_order[1] %}
         <div id="delete"></div>
             <form action="/delete" method="POST">
-                <input type="hidden" name="customer_name" value="{{drink_order[0]}}">
-                <input type="submit" value="delete">
+                <input type="hidden" name="order_id" value="{{drink_order[0]}}">
+                <input type="submit" value="delete order">
             </form>
         </div>
+    {% endif %}
     </tr>
-    {%endif%}
 {% endfor %}
 
 

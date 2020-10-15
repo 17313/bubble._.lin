@@ -28,11 +28,11 @@
 
 <table>
 <div class="container">
-        <tr><h1>Please login</h1></tr>   
+        <tr><h1>Please sign up</h1></tr>   
   <main class="Site-content">
     {% block body %}
       {% if not session["registered"]%}
-        <form action="/signup" method="POST" style="padding: 20px 45px; ">
+        <form action="/signup" method="POST">
           <input type="username" placeholder='Username' name="username">
           <input type="password" placeholder='Password' name="password">
           <input type="submit" value="Register">

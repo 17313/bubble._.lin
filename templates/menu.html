@@ -31,19 +31,19 @@
 
 
 <table>
-{% for place in length %}
+{% for drink in flavour%}
 <tr>
     <td><div class="container w3-center">   
         <div class="row">
             <div class="column">
-                <img src="static/{{results[place][0]}}" alt="{{results[place][0]}}" height=250 width=300>
-                <p><b>{{results[place][3]}} milk tea</p></h> 
+                <img src="static/{{drink[3]}}" height=250 width=300>
+                <p><b>{{drink[0]}} milk tea</p></h> 
             </div>
         </div>
     </div></td>
 
-        <td><div class="border"> Price: ${{description[place][2]}}
-            {{description[place][2]}}></div></td>
+        <td><div class="border">{{drink[2]}}
+                Price: ${{"{:.2f}".format(drink[1])}}</div></td>
 </tr>
 {% endfor %}
 </table>

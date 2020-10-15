@@ -32,14 +32,18 @@
     </nav>
 
     <table>
-            {% for item in results %}
             <tr>
-                <td><div class="container w3-center"  style="float: left;" title = "{{item[1]}}">    
-                <img src="static/{{item[0]}}" alt="{{item[0]}}" height=250 width=300>
-                <p><b>{{item[2]}} milk tea</p></h>  
-                </div></td>
-            </tr>
+            {% for item in results %}
+                <td>
+                    <div class="w3-card-4">
+                        <img src="static/{{item[1]}}" >
+                        <div class="w3-container w3-center">
+                            <p>{{item[0]}} milk tea</p>
+                        </div>
+                    </div>
+                </td>    
             {% endfor %}
-            </table>
+            </tr>
+    </table>
 </body>
 </html>
